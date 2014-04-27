@@ -27,7 +27,7 @@ module.exports = react.createClass({
 				value: this.state.value
 			}),
 			dom.img({
-				src: 'searchButton.png',
+				src: 'img/searchButton.png',
 				className: 'search-button',
 				onClick: this.handleClick
 			})
