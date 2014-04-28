@@ -1,7 +1,56 @@
 var react = require('react');
 var dom = react.DOM;
 
-var cols = ['Name', 'Price', 'Package', 'Origin', 'Category', 'Servings', 'Per Serving'];
+var cols = [{
+		name: 'Name',
+		order: null,
+		text: function(props) {
+			return dom.a({ href: LCBOURL(props.id), target: "_blank" }, props.name);
+		},
+		class: 'text'
+	}, {
+		name: 'Price',
+		order: 'price_in_cents',
+		text: function(props) {
+			return formatPrice(props.regular_price_in_cents);
+		},
+		class: 'numeric'
+	}, {
+		name: 'Package',
+		order: 'total_package_volume_in_milliliters',
+		text: function(props) {
+			return props.package;
+		},
+		class: 'text'
+	}, {
+		name: 'Origin',
+		order: null,
+		text: function(props) {
+			return props.origin;
+		},
+		class: 'text'
+	}, {
+		name: 'Category',
+		order: null,
+		text: function(props) {
+			return formatCategories(props.secondary_category, props.tertiary_category);
+		},
+		class: 'text'
+	}, {
+		name: 'Servings',
+		order: null,
+		text: function(props) {
+			return units(props.alcohol_content, props.volume_in_milliliters);
+		},
+		class: 'numeric'
+	}, {
+		name: 'Per Serving',
+		order: 'price_per_liter_of_alcohol_in_cents',
+		text: function(props) {
+			return formatPrice(costPerUnit(props.price_per_liter_of_alcohol_in_cents));
+		},
+		class: 'numeric'
+	}];
 
 function formatPrice(cents) {
 	return '$' + (cents / 100).toFixed(2);
@@ -25,16 +74,29 @@ function units(alcoholContent, mL) {
 
 var tableRow = react.createClass({
 	render: function() {
-		return dom.tr({},
-			dom.td({className: 'text'},
-				dom.a({ href: LCBOURL(this.props.id), target: "_blank" },
-					this.props.name)),
-			dom.td({className: 'numeric'}, formatPrice(this.props.regular_price_in_cents)),
-			dom.td({className: 'text'}, this.props.package),
-			dom.td({className: 'text'}, this.props.origin),
-			dom.td({className: 'text'}, formatCategories(this.props.secondary_category, this.props.tertiary_category)),
-			dom.td({className: 'numeric'}, units(this.props.alcohol_content, this.props.volume_in_milliliters)),
-			dom.td({className: 'numeric'}, formatPrice(costPerUnit(this.props.price_per_liter_of_alcohol_in_cents)))
+		var tds = cols.map(function(col) {
+			return dom.td({className: col.class}, col.text(this.props));
+		}.bind(this));
+		return dom.tr({}, tds);
+	}
+});
+
+var pageSwitcher = react.createClass({
+	render: function() {
+		return dom.div({
+				className: 'page-index'
+			},
+			dom.span({
+				className: 'page-arrow',
+				onClick: this.props.changePage.bind(null, -1)
+			}, "◀"),
+			dom.span({
+				className: 'page-index-text'
+			}, "Page " + this.props.page + "/" + this.props.maxPage),
+			dom.span({
+				className: 'page-arrow',
+				onClick: this.props.changePage.bind(null, 1)
+			}, "▶")
 		);
 	}
 });
@@ -42,7 +104,7 @@ var tableRow = react.createClass({
 module.exports = react.createClass({
 	render: function() {
 		var ths = cols.map(function(col) {
-			return dom.th({}, col);
+			return dom.th({}, col.name);
 		});
 		var trs = this.props.rows.map(function(obj) {
 			return tableRow(obj);
@@ -54,21 +116,11 @@ module.exports = react.createClass({
 				dom.thead({}, ths),
 				dom.tbody({}, trs)
 			),
-			dom.div({
-					className: 'page-index'
-				},
-				dom.span({
-					className: 'page-arrow',
-					onClick: this.props.changePage.bind(null, -1)
-				}, "◀"),
-				dom.span({
-					className: 'page-index-text'
-				}, "Page " + this.props.page + "/" + this.props.maxPage),
-				dom.span({
-					className: 'page-arrow',
-					onClick: this.props.changePage.bind(null, 1)
-				}, "▶")
-			)
+			pageSwitcher({
+				page: this.props.page,
+				changePage: this.props.changePage,
+				maxPage: this.props.maxPage
+			})
 		);
 	}
 });
