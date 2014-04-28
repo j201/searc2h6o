@@ -106,9 +106,15 @@ header {
 
 .search-table {
 	margin: 10px auto;
-	border-right: 1px solid darken(@content-bg, 5%);
-	border-left: 1px solid darken(@content-bg, 5%);
-	border-bottom: 1px solid darken(@content-bg, 5%);
+	text-align: center;
+	width: 100%;
+
+	table {
+		margin: 0 auto;
+		border-right: 1px solid darken(@content-bg, 5%);
+		border-left: 1px solid darken(@content-bg, 5%);
+		border-bottom: 1px solid darken(@content-bg, 5%);
+	}
 
 	td, th {
 		padding: 4px 12px 4px 6px;
@@ -145,6 +151,25 @@ header {
 
 		&:visited {
 			color: lighten(spin(@purple1, 30), 5%);
+		}
+	}
+}
+
+.page-index {
+	margin-top: 8px;
+
+	.page-index-text {
+		margin: 0 4px;
+	}
+
+	.page-arrow {
+		color: @purple1;
+		cursor: pointer;
+		transition: color 0.2s;
+		font-size: 1.2em;
+
+		&:hover {
+			color: saturate(@purple1, 50%);
 		}
 	}
 }

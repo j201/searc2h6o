@@ -11,8 +11,8 @@ function LCBOURL(id) {
 	return 'http://lcbo.com/lcbo-ear/lcbo/product/details.do?language=EN&itemNumber=' + id;
 }
 
-function perStandardDrink(alcoholPerL) {
-	return alcoholPerL * 0.17; // 17mL per standard drink
+function perStandardDrink(costPerL) {
+	return costPerL * 0.17; // 17mL per standard drink, plus the service seems to multiply by 10
 }
 
 var tableRow = react.createClass({
@@ -36,10 +36,28 @@ module.exports = react.createClass({
 		var trs = this.props.rows.map(function(obj) {
 			return tableRow(obj);
 		});
-		return dom.table({
+		return dom.div({
 				className: 'search-table'
 			},
-			dom.thead({}, ths),
-			dom.tbody({}, trs));
+			dom.table({},
+				dom.thead({}, ths),
+				dom.tbody({}, trs)
+			),
+			dom.div({
+					className: 'page-index'
+				},
+				dom.span({
+					className: 'page-arrow',
+					onClick: this.props.changePage.bind(null, -1)
+				}, "◀"),
+				dom.span({
+					className: 'page-index-text'
+				}, "Page " + this.props.page + "/" + this.props.maxPage),
+				dom.span({
+					className: 'page-arrow',
+					onClick: this.props.changePage.bind(null, 1)
+				}, "▶")
+			)
+		);
 	}
 });
