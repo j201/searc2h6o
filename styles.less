@@ -3,6 +3,7 @@
 @yellow1: #AAD52A;
 @purple1: #7865CD;
 @purple2: #9465CD;
+@purple-emphasis: saturate(@purple1, 100%);
 @content-bg: #f6f6f6;
 
 body {
@@ -64,8 +65,8 @@ header {
 }
 
 #react-container {
-	padding: 1px;
-	padding-bottom: 70px;
+	padding: 1px 10px;
+	padding-bottom: 50px;
 	background-color: @content-bg;
 	border-bottom: 4px solid @green2;
 }
@@ -83,7 +84,7 @@ header {
 		font-size: 1.2em;
 		box-sizing: border-box;
 		height: 36px;
-		vertical-align: top;
+		vertical-align: middle;
 		transition: border 0.2s;
 
 		&:focus {
@@ -97,6 +98,7 @@ header {
 		margin-left: 4px;
 		cursor: pointer;
 		transition: background-color 0.2s;
+		vertical-align: middle;
 
 		&:hover {
 			background-color: @yellow1;
@@ -132,9 +134,30 @@ header {
 		}
 	}
 
-	th {
+	.col-title {
 		background-color: @purple1;
+	}
+
+	.col-title-text {
 		color: #eee;
+		transition: color 0.2s;
+
+		&.orderable {
+			cursor: pointer;
+
+			&:hover {
+				color: lighten(@purple-emphasis, 20%);
+			}
+		}
+	}
+
+	.col-title-arrow {
+		color: #eee;
+		cursor: pointer;
+
+		&:hover {
+			color: lighten(@purple-emphasis, 20%);
+		}
 	}
 
 	tr:nth-child(even) {
@@ -146,7 +169,7 @@ header {
 		color: darken(@purple1, 20%);
 
 		&:hover {
-			color: saturate(@purple1, 100%);
+			color: @purple-emphasis;
 		}
 
 		&:visited {

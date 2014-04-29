@@ -47,8 +47,8 @@ header .icon-link img:hover {
   opacity: 1;
 }
 #react-container {
-  padding: 1px;
-  padding-bottom: 70px;
+  padding: 1px 10px;
+  padding-bottom: 50px;
   background-color: #f6f6f6;
   border-bottom: 4px solid #c5ecc5;
 }
@@ -64,7 +64,7 @@ header .icon-link img:hover {
   font-size: 1.2em;
   box-sizing: border-box;
   height: 36px;
-  vertical-align: top;
+  vertical-align: middle;
   transition: border 0.2s;
 }
 .search-bar input[type=text]:focus {
@@ -76,6 +76,7 @@ header .icon-link img:hover {
   margin-left: 4px;
   cursor: pointer;
   transition: background-color 0.2s;
+  vertical-align: middle;
 }
 .search-bar .search-button:hover {
   background-color: #aad52a;
@@ -107,9 +108,25 @@ header .icon-link img:hover {
 .search-table th:last-child {
   padding-right: 6px;
 }
-.search-table th {
+.search-table .col-title {
   background-color: #7865cd;
+}
+.search-table .col-title-text {
   color: #eee;
+  transition: color 0.2s;
+}
+.search-table .col-title-text.orderable {
+  cursor: pointer;
+}
+.search-table .col-title-text.orderable:hover {
+  color: #ac99ff;
+}
+.search-table .col-title-arrow {
+  color: #eee;
+  cursor: pointer;
+}
+.search-table .col-title-arrow:hover {
+  color: #ac99ff;
 }
 .search-table tr:nth-child(even) {
   background-color: #e9e9e9;

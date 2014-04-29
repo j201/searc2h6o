@@ -101,11 +101,38 @@ var pageSwitcher = react.createClass({
 	}
 });
 
+var colTitle = react.createClass({
+	handleClick: function() {
+		if (this.props.col.order)
+			this.props.setOrder(
+				this.props.order.indexOf(this.props.col.order) === -1 ? this.props.col.order + '.asc' :
+					this.props.col.order + (this.props.order.indexOf('.asc') === -1 ? '.asc' : '.desc'));
+	},
+	render: function() {
+		return dom.th({
+			className: 'col-title'
+		}, dom.span({
+				className: 'col-title-text' + (this.props.col.order ? ' orderable' : ''),
+				onClick: this.handleClick
+			}, this.props.col.name),
+			this.props.col.order && this.props.order.indexOf(this.props.col.order) !== -1 &&
+			dom.span({
+				className: 'col-title-arrow' + (this.props.order.indexOf(this.props.col.order) === -1 ? ' selected' : ''),
+				onClick: this.handleClick
+			}, this.props.order.indexOf('.desc') !== -1 ? "▼" : "▲")
+		);
+	}
+});
+
 module.exports = react.createClass({
 	render: function() {
 		var ths = cols.map(function(col) {
-			return dom.th({}, col.name);
-		});
+			return colTitle({
+				col: col,
+				setOrder: this.props.setOrder,
+				order: this.props.order
+			});
+		}.bind(this));
 		var trs = this.props.rows.map(function(obj) {
 			return tableRow(obj);
 		});
