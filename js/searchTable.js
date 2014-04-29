@@ -4,49 +4,51 @@ var dom = react.DOM;
 var cols = [{
 		name: 'Name',
 		order: null,
-		text: function(props) {
+		content: function(props) {
 			return dom.a({ href: LCBOURL(props.id), target: "_blank" }, props.name);
 		},
 		class: 'text'
 	}, {
 		name: 'Price',
 		order: 'price_in_cents',
-		text: function(props) {
-			return formatPrice(props.regular_price_in_cents);
+		content: function(props) {
+			return dom.span({
+				className: props.has_limited_time_offer || props.has_clearance_sale ? 'sale' : ''
+			}, formatPrice(props.price_in_cents));
 		},
 		class: 'numeric'
 	}, {
 		name: 'Package',
 		order: 'total_package_volume_in_milliliters',
-		text: function(props) {
+		content: function(props) {
 			return props.package;
 		},
 		class: 'text'
 	}, {
 		name: 'Origin',
 		order: null,
-		text: function(props) {
+		content: function(props) {
 			return props.origin;
 		},
 		class: 'text'
 	}, {
 		name: 'Category',
 		order: null,
-		text: function(props) {
+		content: function(props) {
 			return formatCategories(props.secondary_category, props.tertiary_category);
 		},
 		class: 'text'
 	}, {
 		name: 'Servings',
 		order: null,
-		text: function(props) {
+		content: function(props) {
 			return units(props.alcohol_content, props.volume_in_milliliters);
 		},
 		class: 'numeric'
 	}, {
 		name: 'Per Serving',
 		order: 'price_per_liter_of_alcohol_in_cents',
-		text: function(props) {
+		content: function(props) {
 			return formatPrice(costPerUnit(props.price_per_liter_of_alcohol_in_cents));
 		},
 		class: 'numeric'
@@ -75,7 +77,7 @@ function units(alcoholContent, mL) {
 var tableRow = react.createClass({
 	render: function() {
 		var tds = cols.map(function(col) {
-			return dom.td({className: col.class}, col.text(this.props));
+			return dom.td({className: col.class}, col.content(this.props));
 		}.bind(this));
 		return dom.tr({}, tds);
 	}

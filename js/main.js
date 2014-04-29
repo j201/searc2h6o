@@ -58,7 +58,7 @@ var content = react.createClass({
 				className: 'content'
 			},
 			searchBar({
-				initial: 'beer',
+				initial: this.state.options.q,
 				onChange: function(text) {
 					this.queryChange(text);
 				}.bind(this)

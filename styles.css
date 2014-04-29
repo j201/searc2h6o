@@ -104,6 +104,10 @@ header .icon-link img:hover {
 .search-table th.numeric {
   text-align: right;
 }
+.search-table td .sale,
+.search-table th .sale {
+  color: #e60000;
+}
 .search-table td:last-child,
 .search-table th:last-child {
   padding-right: 6px;
@@ -117,6 +121,7 @@ header .icon-link img:hover {
 }
 .search-table .col-title-text.orderable {
   cursor: pointer;
+  color: #d4f570;
 }
 .search-table .col-title-text.orderable:hover {
   color: #ac99ff;

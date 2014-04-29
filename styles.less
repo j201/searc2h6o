@@ -129,6 +129,10 @@ header {
 			text-align: right;
 		}
 
+		.sale {
+			color: darken(red, 5%);
+		}
+
 		&:last-child {
 			padding-right: 6px;
 		}
@@ -144,6 +148,7 @@ header {
 
 		&.orderable {
 			cursor: pointer;
+			color: saturate(lighten(@yellow1, 20%), 20%);
 
 			&:hover {
 				color: lighten(@purple-emphasis, 20%);
