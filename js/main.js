@@ -1,9 +1,9 @@
 var searchTable = require('./searchTable');
 var searchBar = require('./searchBar');
+var checkbox = require('./checkbox');
 var react = require('react');
 var dom = react.DOM;
 var search = require('./search');
-var queryString = require('query-string');
 var deepMerge = require('./deep-merge');
 
 var log = function(x) { console.log(x); return x; };
@@ -14,28 +14,23 @@ var content = react.createClass({
 			data: { result: [] },
 			options: 
 				location.hash ?
-					log(queryString.parse(location.hash.replace('#', '?'))) : // Yeah, it's hackish, but I don't see any major problems with it for this application
+					log(search.dequeryify(location.hash.replace('#', ''))) : // Yeah, it's hackish, but I don't see any major problems with it for this application
 					{
 						page: 1,
 						q: 'beer',
-						where_not: ['is_dead', 'is_discontinued']
+						where_not: ['is_dead', 'is_discontinued'],
+						where: []
 					},
 		};
 	},
 	runSearch: function(options) { // Merges options with existing ones, sets location.string, and runs query
 		var newOptions = deepMerge(this.state.options, options);
 		this.setState({ options: newOptions });
-		location.hash = queryString.stringify(newOptions); 
+		location.hash = search.queryify(newOptions); 
 		search.productSearch(newOptions).then(function(res) {
 			console.log(res);
 			this.setState({ data: res });
 		}.bind(this));
-	},
-	queryChange: function(query) {
-		this.runSearch({
-			q: query,
-			page: 1
-		});
 	},
 	changePage: function(change) {
 		if (!this.state.data.pager) return;
@@ -60,8 +55,21 @@ var content = react.createClass({
 			searchBar({
 				initial: this.state.options.q,
 				onChange: function(text) {
-					this.queryChange(text);
+					this.runSearch({
+						q: text,
+						page: 1
+					});
 				}.bind(this)
+			}),
+			checkbox({
+				title: 'On Sale',
+				onChange: function(val) {
+					this.runSearch({
+						where: val ? ['has_limited_time_offer'] : [],
+						page: 1
+					});
+				}.bind(this),
+				initial: this.state.options.where.indexOf('has_limited_time_offer') !== -1
 			}),
 			searchTable({
 				rows: this.state.data.result,

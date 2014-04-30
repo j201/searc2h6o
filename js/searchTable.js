@@ -13,7 +13,8 @@ var cols = [{
 		order: 'price_in_cents',
 		content: function(props) {
 			return dom.span({
-				className: props.has_limited_time_offer || props.has_clearance_sale ? 'sale' : ''
+				className: props.has_limited_time_offer || props.has_clearance_sale ? 'sale' : '',
+				title: 'Regular ' + formatPrice(props.regular_price_in_cents)
 			}, formatPrice(props.price_in_cents));
 		},
 		class: 'numeric'
@@ -49,7 +50,10 @@ var cols = [{
 		name: 'Per Serving',
 		order: 'price_per_liter_of_alcohol_in_cents',
 		content: function(props) {
-			return formatPrice(costPerUnit(props.price_per_liter_of_alcohol_in_cents));
+			return dom.span({
+				className: props.has_limited_time_offer || props.has_clearance_sale ? 'sale' : '',
+				title: 'Regular ' + formatPrice(costPerUnit(props.price_per_liter_of_alcohol_in_cents * props.regular_price_in_cents / props.price_in_cents))
+			}, formatPrice(costPerUnit(props.price_per_liter_of_alcohol_in_cents)));
 		},
 		class: 'numeric'
 	}];
