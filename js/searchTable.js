@@ -40,6 +40,13 @@ var cols = [{
 		},
 		class: 'text'
 	}, {
+		name: 'ABV',
+		order: 'alcohol_content',
+		content: function(props) {
+			return (props.alcohol_content / 100).toFixed(1) + '%';
+		},
+		class: 'numeric'
+	}, {
 		name: 'Servings',
 		order: null,
 		content: function(props) {

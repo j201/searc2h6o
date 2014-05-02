@@ -69,7 +69,7 @@ var content = react.createClass({
 						page: 1
 					});
 				}.bind(this),
-				initial: this.state.options.where.indexOf('has_limited_time_offer') !== -1
+				initial: Boolean(this.state.options.where) && this.state.options.where.indexOf('has_limited_time_offer') !== -1
 			}),
 			searchTable({
 				rows: this.state.data.result,
