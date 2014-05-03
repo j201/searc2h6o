@@ -15,7 +15,7 @@ var content = react.createClass({
 			data: { result: [] },
 			options: 
 				location.hash ?
-					log(search.dequeryify(location.hash.replace('#', ''))) : // Yeah, it's hackish, but I don't see any major problems with it for this application
+					log(deepMerge({page: 1, q: ''}, search.dequeryify(location.hash.replace('#', '')))) : // Yeah, it's hackish, but I don't see any major problems with it for this application
 					{
 						page: 1,
 						q: 'beer',
@@ -36,7 +36,7 @@ var content = react.createClass({
 	changePage: function(change) {
 		if (!this.state.data.pager) return;
 		this.runSearch({
-			page: Math.max(1, Math.min(this.state.data.pager.final_page, (this.state.options.page || 1) + change)),
+			page: Math.max(1, Math.min(this.state.data.pager.final_page, this.state.options.page + change)),
 			q: this.state.options.q
 		});
 	},

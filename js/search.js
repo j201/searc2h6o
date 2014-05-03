@@ -8,7 +8,7 @@ function productSearchURL(options) {
 
 exports.queryify = function(options) {
 	return Object.keys(options).filter(function(el) {
-		return options[el].length > 0;
+		return typeof options[el] === 'number' || options[el].length > 0;
 	}).map(function(el) {
 		return el + '=' + encodeURIComponent(options[el]);
 	}).join('&');
