@@ -57,6 +57,7 @@ header .icon-link img:hover {
 }
 .search-bar {
   margin: 10px 0;
+  display: inline-block;
 }
 .search-bar input[type=text] {
   padding: 4px 6px;
@@ -80,6 +81,13 @@ header .icon-link img:hover {
 }
 .search-bar .search-button:hover {
   background-color: #aad52a;
+}
+.search-options {
+  display: inline-block;
+  margin-left: 30px;
+}
+.search-options .checkbox-container {
+  margin-right: 20px;
 }
 .search-table {
   margin: 10px auto;

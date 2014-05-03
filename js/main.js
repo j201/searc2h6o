@@ -5,6 +5,7 @@ var react = require('react');
 var dom = react.DOM;
 var search = require('./search');
 var deepMerge = require('./deep-merge');
+var arrSet = require('./arr-set');
 
 var log = function(x) { console.log(x); return x; };
 
@@ -35,7 +36,7 @@ var content = react.createClass({
 	changePage: function(change) {
 		if (!this.state.data.pager) return;
 		this.runSearch({
-			page: Math.max(1, Math.min(this.state.data.pager.final_page, this.state.options.page + change)),
+			page: Math.max(1, Math.min(this.state.data.pager.final_page, (this.state.options.page || 1) + change)),
 			q: this.state.options.q
 		});
 	},
@@ -61,19 +62,35 @@ var content = react.createClass({
 					});
 				}.bind(this)
 			}),
-			checkbox({
-				title: 'On Sale',
-				onChange: function(val) {
-					this.runSearch({
-						where: val ? ['has_limited_time_offer'] : [],
-						page: 1
-					});
-				}.bind(this),
-				initial: Boolean(this.state.options.where) && this.state.options.where.indexOf('has_limited_time_offer') !== -1
-			}),
+			dom.div({
+				className: 'search-options'
+			},
+				checkbox({
+					title: 'On Sale',
+					onChange: function(val) {
+						var where = this.state.options.where || [];
+						this.runSearch({
+							where: val ? arrSet.add('has_limited_time_offer', where) : arrSet.remove('has_limited_time_offer', where),
+							page: 1
+						});
+					}.bind(this),
+					initial: Boolean(this.state.options.where) && this.state.options.where.indexOf('has_limited_time_offer') !== -1
+				}),
+				checkbox({
+					title: 'VQA',
+					onChange: function(val) {
+						var where = this.state.options.where || [];
+						this.runSearch({
+							where: val ? arrSet.add('is_vqa', where) : arrSet.remove('is_vqa', where),
+							page: 1
+						});
+					}.bind(this),
+					initial: Boolean(this.state.options.where) && this.state.options.where.indexOf('has_limited_time_offer') !== -1
+				})
+			),
 			searchTable({
 				rows: this.state.data.result,
-				page: this.state.options.page,
+				page: this.state.options.page || '1',
 				maxPage: this.state.data.pager ? this.state.data.pager.final_page : '?',
 				changePage: this.changePage,
 				setOrder: this.setOrder,
