@@ -3,18 +3,19 @@ var dom = react.DOM;
 
 module.exports = react.createClass({
 	getInitialState: function() {
-		return { checked: this.props.initial || false };
+		return { checked: null };
 	},
 	handleChange: function(e) {
 		this.setState({ checked: e.target.checked });
 		this.props.onChange(e.target.checked);
-	}, render: function() {
+	},
+	render: function() {
 		return dom.span({
 			className: 'checkbox-container'
 		}, dom.input({
 			type: 'checkbox',
 			onChange: this.handleChange,
-			checked: this.state.checked
+			checked: this.state.checked === null ? this.props.checked : this.state.checked
 		}), dom.span({
 			className: 'checkbox-title'
 		}, this.props.title));
