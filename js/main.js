@@ -6,6 +6,7 @@ var dom = react.DOM;
 var search = require('./search');
 var deepMerge = require('./deep-merge');
 var arrSet = require('./arr-set');
+var storePicker = require('./storePicker');
 
 var log = function(x) { console.log(x); return x; };
 
@@ -104,6 +105,11 @@ var content = react.createClass({
 						});
 					}.bind(this),
 					checked: Boolean(options.where) && options.where.indexOf('is_vqa') !== -1
+				}),
+				storePicker({
+					handleChange: function(storeID) {
+						this.runSearch({ store: storeID });
+					}.bind(this)
 				})
 			),
 			searchTable({

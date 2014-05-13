@@ -89,6 +89,9 @@ header .icon-link img:hover {
 .search-options .checkbox-container {
   margin-right: 20px;
 }
+.search-options select {
+  max-width: 250px;
+}
 .search-table {
   margin: 10px auto;
   text-align: center;
