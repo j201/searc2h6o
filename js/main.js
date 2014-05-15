@@ -44,6 +44,7 @@ var content = react.createClass({
 	runSearch: function(options) { // Merges options with existing ones and sets location.hash, which runs the query
 		var newOptions = deepMerge(getHashOptions(), options);
 		location.hash = search.queryify(newOptions); 
+		this.forceUpdate();
 	},
 	changePage: function(change) {
 		if (!this.state.data.pager) return;
@@ -105,12 +106,12 @@ var content = react.createClass({
 						});
 					}.bind(this),
 					checked: Boolean(options.where) && options.where.indexOf('is_vqa') !== -1
-				}),
-				storePicker({
-					handleChange: function(storeID) {
-						this.runSearch({ store: storeID });
-					}.bind(this)
 				})
+				// storePicker({
+				// 	handleChange: function(storeID) {
+				// 		this.runSearch({ store: storeID });
+				// 	}.bind(this)
+				// })
 			),
 			searchTable({
 				rows: this.state.data.result,
