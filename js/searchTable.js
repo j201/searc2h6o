@@ -40,6 +40,16 @@ var cols = [{
 		},
 		class: 'text'
 	}, {
+		name: 'Per Litre',
+		order: 'price_per_liter_in_cents',
+		content: function(props) {
+			return dom.span({
+				className: props.has_limited_time_offer || props.has_clearance_sale ? 'sale' : '',
+				title: 'Regular ' + formatPrice(props.regular_price_in_cents / props.price_in_cents * props.price_per_liter_in_cents)
+			}, formatPrice(props.price_per_liter_in_cents));
+		},
+		class: 'numeric'
+	}, {
 		name: 'ABV',
 		order: 'alcohol_content',
 		content: function(props) {
@@ -59,8 +69,8 @@ var cols = [{
 		content: function(props) {
 			return dom.span({
 				className: props.has_limited_time_offer || props.has_clearance_sale ? 'sale' : '',
-				title: 'Regular ' + formatPrice(costPerUnit(props.price_per_liter_of_alcohol_in_cents * props.regular_price_in_cents / props.price_in_cents))
-			}, formatPrice(costPerUnit(props.price_per_liter_of_alcohol_in_cents)));
+				title: 'Regular ' + formatPrice(costPerServing(props.price_per_liter_of_alcohol_in_cents * props.regular_price_in_cents / props.price_in_cents))
+			}, formatPrice(costPerServing(props.price_per_liter_of_alcohol_in_cents)));
 		},
 		class: 'numeric'
 	}];
@@ -77,7 +87,7 @@ function LCBOURL(id) {
 	return 'http://lcbo.com/lcbo-ear/lcbo/product/details.do?language=EN&itemNumber=' + id;
 }
 
-function costPerUnit(costPerL) {
+function costPerServing(costPerL) {
 	return costPerL * 0.172; // 17.2mL per standard drink, plus the service seems to multiply by 10
 }
 
