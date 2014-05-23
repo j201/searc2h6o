@@ -58,7 +58,7 @@ var cols = [{
 		class: 'numeric'
 	}, {
 		name: dom.span({
-			title: 'Standard 17.2mL ethanol servings'
+			title: 'Standard 17.2mL alcohol servings'
 		}, 'Servings'),
 		order: null,
 		content: function(props) {
@@ -67,7 +67,7 @@ var cols = [{
 		class: 'numeric'
 	}, {
 		name: dom.span({
-			title: 'Per standard 17.2mL ethanol serving'
+			title: 'Per standard 17.2mL alcohol serving'
 		}, 'Per Serving'),
 		order: 'price_per_liter_of_alcohol_in_cents',
 		content: function(props) {
