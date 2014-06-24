@@ -46,6 +46,15 @@ header .icon-link img {
 header .icon-link img:hover {
   opacity: 1;
 }
+#api-note {
+  background-color: #f6f6f6;
+  color: #600;
+  padding: 10px;
+  text-align: center;
+}
+#api-note a {
+  color: #006;
+}
 #react-container {
   padding: 1px 10px;
   padding-bottom: 50px;

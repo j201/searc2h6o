@@ -50,7 +50,7 @@ var content = react.createClass({
 		if (!this.state.data.pager) return;
 		var options = getHashOptions();
 		this.runSearch({
-			page: Math.max(1, Math.min(this.state.data.pager.final_page, options.page + change)),
+			page: Math.max(1, Math.min(this.state.data.pager.total_pages, options.page + change)),
 			q: options.q
 		});
 	},
@@ -116,7 +116,7 @@ var content = react.createClass({
 			searchTable({
 				rows: this.state.data.result,
 				page: options.page || '1',
-				maxPage: this.state.data.pager ? this.state.data.pager.final_page : '?',
+				maxPage: this.state.data.pager ? this.state.data.pager.total_pages : '?',
 				changePage: this.changePage,
 				setOrder: this.setOrder,
 				order: options.order || ''
