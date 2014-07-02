@@ -5,7 +5,7 @@ var cols = [{
 		name: 'Name',
 		order: null,
 		content: function(props) {
-			return dom.a({ href: LCBOURL(props.id), target: "_blank" }, props.name);
+			return dom.a({ href: LCBOURL(props.name, props.id), target: "_blank" }, props.name);
 		},
 		class: 'text'
 	}, {
@@ -87,8 +87,8 @@ function formatCategories() {
 	return Array.prototype.slice.call(arguments).filter(function(x) { return x; }).join(' - ');
 }
 
-function LCBOURL(id) {
-	return 'http://lcbo.com/lcbo-ear/lcbo/product/details.do?language=EN&itemNumber=' + id;
+function LCBOURL(name, id) {
+	return 'http://www.lcbo.com/lcbo/product/' + name.replace(/\W+/g, '-').toLowerCase() + '/' + id;
 }
 
 function costPerServing(costPerL) {
