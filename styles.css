@@ -1,6 +1,7 @@
 body {
   font-family: Oxygen, Helvetica, Arial, sans-serif;
   background-color: #65cd65;
+  min-width: 800px;
 }
 a {
   color: white;

@@ -84,29 +84,31 @@ var content = react.createClass({
 			}),
 			dom.div({
 				className: 'search-options'
-			},
-				checkbox({
-					title: 'On Sale',
-					onChange: function(val) {
-						var where = options.where || [];
-						this.runSearch({
-							where: val ? arrSet.add('has_limited_time_offer', where) : arrSet.remove('has_limited_time_offer', where),
-							page: 1
-						});
-					}.bind(this),
-					checked: Boolean(options.where) && options.where.indexOf('has_limited_time_offer') !== -1
-				}),
-				checkbox({
-					title: 'VQA',
-					onChange: function(val) {
-						var where = options.where || [];
-						this.runSearch({
-							where: val ? arrSet.add('is_vqa', where) : arrSet.remove('is_vqa', where),
-							page: 1
-						});
-					}.bind(this),
-					checked: Boolean(options.where) && options.where.indexOf('is_vqa') !== -1
-				})
+			}
+			// 'where' isn't working in queries, so disabling this for now
+				// checkbox({
+				// 	title: 'On Sale',
+				// 	onChange: function(val) {
+				// 		var where = options.where || [];
+				// 		this.runSearch({
+				// 			where: val ? arrSet.add('has_limited_time_offer', where) : arrSet.remove('has_limited_time_offer', where),
+				// 			page: 1
+				// 		});
+				// 	}.bind(this),
+				// 	checked: Boolean(options.where) && options.where.indexOf('has_limited_time_offer') !== -1
+				// }),
+				// checkbox({
+				// 	title: 'VQA',
+				// 	onChange: function(val) {
+				// 		var where = options.where || [];
+				// 		this.runSearch({
+				// 			where: val ? arrSet.add('is_vqa', where) : arrSet.remove('is_vqa', where),
+				// 			page: 1
+				// 		});
+				// 	}.bind(this),
+				// 	checked: Boolean(options.where) && options.where.indexOf('is_vqa') !== -1
+				// })
+
 				// storePicker({
 				// 	handleChange: function(storeID) {
 				// 		this.runSearch({ store: storeID });

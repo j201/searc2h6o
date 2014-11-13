@@ -77,6 +77,20 @@ var cols = [{
 			}, formatPrice(costPerServing(props.price_per_liter_of_alcohol_in_cents)));
 		},
 		class: 'numeric'
+	}, {
+		name: dom.span({
+			title: 'For sale items, the price that the item is discounted by'
+		}, 'Savings'),
+		order: 'limited_time_offer_savings_in_cents',
+		content: function(props) {
+			return dom.span({
+				className: props.has_limited_time_offer || props.has_clearance_sale ? 'sale' : ''
+			}, props.limited_time_offer_savings_in_cents ?
+				formatPrice(props.limited_time_offer_savings_in_cents) :
+				'');
+		},
+		class: 'numeric',
+		defaultDesc: true
 	}];
 
 function formatPrice(cents) {
@@ -132,7 +146,8 @@ var colTitle = react.createClass({
 	handleClick: function() {
 		if (this.props.col.order)
 			this.props.setOrder(
-				this.props.order.indexOf(this.props.col.order) === -1 ? this.props.col.order + '.asc' :
+				this.props.order.indexOf(this.props.col.order) === -1 ?
+					this.props.col.order + (this.props.col.defaultDesc ? '.desc' : '.asc') :
 					this.props.col.order + (this.props.order.indexOf('.asc') === -1 ? '.asc' : '.desc'));
 	},
 	render: function() {
