@@ -1,3 +1,5 @@
+var qjsonp = require('./qjsonp');
+
 function getStores(page) {
 	return qjsonp("http://lcboapi.com/stores?page=" + page + "&per_page=100&callback=?");
 }

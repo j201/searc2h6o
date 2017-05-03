@@ -84,7 +84,7 @@ var content = react.createClass({
 			}),
 			dom.div({
 				className: 'search-options'
-			}
+			}),
 			// 'where' isn't working in queries, so disabling this for now
 				// checkbox({
 				// 	title: 'On Sale',
@@ -109,12 +109,11 @@ var content = react.createClass({
 				// 	checked: Boolean(options.where) && options.where.indexOf('is_vqa') !== -1
 				// })
 
-				// storePicker({
-				// 	handleChange: function(storeID) {
-				// 		this.runSearch({ store: storeID });
-				// 	}.bind(this)
-				// })
-			),
+			storePicker({
+				handleChange: function(storeID) {
+					this.runSearch({ store: storeID });
+				}.bind(this)
+			}),
 			searchTable({
 				rows: this.state.data.result,
 				page: options.page || '1',
