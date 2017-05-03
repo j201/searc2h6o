@@ -110,6 +110,7 @@ var content = react.createClass({
 				// })
 
 			storePicker({
+				initial: options.store,
 				handleChange: function(storeID) {
 					this.runSearch({ store: storeID });
 				}.bind(this)
