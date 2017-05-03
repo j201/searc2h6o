@@ -115,6 +115,10 @@ select:focus {
   border: 2px solid #AAD52A;
   outline: none;
 }
+option {
+  background-color: white;
+  font-size: 0.8em;
+}
 .search-options {
   display: inline-block;
   margin-left: 30px;
