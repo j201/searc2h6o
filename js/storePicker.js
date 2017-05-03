@@ -31,14 +31,11 @@ module.exports = react.createClass({
 				value: store.id
 			}, storeDisplay(store));
 		}.bind(this)));
-		var selected = utils.find(storeData, function(store) {
-			return store.id === this.state.id;
-		}.bind(this));
 		return dom.select({
 			className: "store-picker",
 			onChange: this.handleChange,
 			placeholder: "Choose store",
-			value: selected
+			value: this.state.id
 		}, options);
 	}
 });
